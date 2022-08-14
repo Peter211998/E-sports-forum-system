@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sports.dao.CompetitionMapper">
+  <resultMap id="BaseResultMap" type="com.sports.model.Competition">
+    <id column="compe_id" jdbcType="INTEGER" property="compeId" />
+    <result column="compe_title" jdbcType="VARCHAR" property="compeTitle" />
+    <result column="compe_type" jdbcType="INTEGER" property="compeType" />
+    <result column="compe_status" jdbcType="INTEGER" property="compeStatus" />
+    <result column="compe_host_score" jdbcType="TINYINT" property="compeHostScore" />
+    <result column="compe_guest_score" jdbcType="TINYINT" property="compeGuestScore" />
+    <result column="compe_time" jdbcType="INTEGER" property="compeTime" />
+    <result column="compe_video_url" jdbcType="VARCHAR" property="compeVideoUrl" />
+    <result column="compe_ht_id" jdbcType="INTEGER" property="compeHtId" />
+    <result column="compe_gt_id" jdbcType="INTEGER" property="compeGtId" />
+    <result column="compe_institution" jdbcType="TINYINT" property="compeInstitution" />
+    <result column="compe_wt_id" jdbcType="INTEGER" property="compeWtId" />
+    <result column="compe_season" jdbcType="INTEGER" property="compeSeason" />
+    <result column="is_enable" jdbcType="TINYINT" property="isEnable" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    compe_id, compe_title, compe_type, compe_status, compe_host_score, compe_guest_score, 
+    compe_time, compe_video_url, compe_ht_id, compe_gt_id, compe_institution, compe_wt_id, 
+    compe_season, is_enable
+  </sql>
+  <select id="selectByExample" parameterType="com.sports.model.CompetitionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from competition
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from competition
+    where compe_id = #{compeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from competition
+    where compe_id = #{compeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sports.model.CompetitionExample">
+    delete from competition
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sports.model.Competition">
+    insert into competition (compe_id, compe_title, compe_type, 
+      compe_status, compe_host_score, compe_guest_score, 
+      compe_time, compe_video_url, compe_ht_id, 
+      compe_gt_id, compe_institution, compe_wt_id, 
+      compe_season, is_enable)
+    values (#{compeId,jdbcType=INTEGER}, #{compeTitle,jdbcType=VARCHAR}, #{compeType,jdbcType=INTEGER}, 
+      #{compeStatus,jdbcType=INTEGER}, #{compeHostScore,jdbcType=TINYINT}, #{compeGuestScore,jdbcType=TINYINT}, 
+      #{compeTime,jdbcType=INTEGER}, #{compeVideoUrl,jdbcType=VARCHAR}, #{compeHtId,jdbcType=INTEGER}, 
+      #{compeGtId,jdbcType=INTEGER}, #{compeInstitution,jdbcType=TINYINT}, #{compeWtId,jdbcType=INTEGER}, 
+      #{compeSeason,jdbcType=INTEGER}, #{isEnable,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sports.model.Competition">
+    insert into competition
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="compeId != null">
+        compe_id,
+      </if>
+      <if test="compeTitle != null">
+        compe_title,
+      </if>
+      <if test="compeType != null">
+        compe_type,
+      </if>
+      <if test="compeStatus != null">
+        compe_status,
+      </if>
+      <if test="compeHostScore != null">
+        compe_host_score,
+      </if>
+      <if test="compeGuestScore != null">
+        compe_guest_score,
+      </if>
+      <if test="compeTime != null">
+        compe_time,
+      </if>
+      <if test="compeVideoUrl != null">
+        compe_video_url,
+      </if>
+      <if test="compeHtId != null">
+        compe_ht_id,
+      </if>
+      <if test="compeGtId != null">
+        compe_gt_id,
+      </if>
+      <if test="compeInstitution != null">
+        compe_institution,
+      </if>
+      <if test="compeWtId != null">
+        compe_wt_id,
+      </if>
+      <if test="compeSeason != null">
+        compe_season,
+      </if>
+      <if test="isEnable != null">
+        is_enable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="compeId != null">
+        #{compeId,jdbcType=INTEGER},
+      </if>
+      <if test="compeTitle != null">
+        #{compeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="compeType != null">
+        #{compeType,jdbcType=INTEGER},
+      </if>
+      <if test="compeStatus != null">
+        #{compeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="compeHostScore != null">
+        #{compeHostScore,jdbcType=TINYINT},
+      </if>
+      <if test="compeGuestScore != null">
+        #{compeGuestScore,jdbcType=TINYINT},
+      </if>
+      <if test="compeTime != null">
+        #{compeTime,jdbcType=INTEGER},
+      </if>
+      <if test="compeVideoUrl != null">
+        #{compeVideoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="compeHtId != null">
+        #{compeHtId,jdbcType=INTEGER},
+      </if>
+      <if test="compeGtId != null">
+        #{compeGtId,jdbcType=INTEGER},
+      </if>
+      <if test="compeInstitution != null">
+        #{compeInstitution,jdbcType=TINYINT},
+      </if>
+      <if test="compeWtId != null">
+        #{compeWtId,jdbcType=INTEGER},
+      </if>
+      <if test="compeSeason != null">
+        #{compeSeason,jdbcType=INTEGER},
+      </if>
+      <if test="isEnable != null">
+        #{isEnable,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sports.model.CompetitionExample" resultType="java.lang.Long">
+    select count(*) from competition
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update competition
+    <set>
+      <if test="record.compeId != null">
+        compe_id = #{record.compeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.compeTitle != null">
+        compe_title = #{record.compeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compeType != null">
+        compe_type = #{record.compeType,jdbcType=INTEGER},
+      </if>
+      <if test="record.compeStatus != null">
+        compe_status = #{record.compeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.compeHostScore != null">
+        compe_host_score = #{record.compeHostScore,jdbcType=TINYINT},
+      </if>
+      <if test="record.compeGuestScore != null">
+        compe_guest_score = #{record.compeGuestScore,jdbcType=TINYINT},
+      </if>
+      <if test="record.compeTime != null">
+        compe_time = #{record.compeTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.compeVideoUrl != null">
+        compe_video_url = #{record.compeVideoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compeHtId != null">
+        compe_ht_id = #{record.compeHtId,jdbcType=INTEGER},
+      </if>
+      <if test="record.compeGtId != null">
+        compe_gt_id = #{record.compeGtId,jdbcType=INTEGER},
+      </if>
+      <if test="record.compeInstitution != null">
+        compe_institution = #{record.compeInstitution,jdbcType=TINYINT},
+      </if>
+      <if test="record.compeWtId != null">
+        compe_wt_id = #{record.compeWtId,jdbcType=INTEGER},
+      </if>
+      <if test="record.compeSeason != null">
+        compe_season = #{record.compeSeason,jdbcType=INTEGER},
+      </if>
+      <if test="record.isEnable != null">
+        is_enable = #{record.isEnable,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update competition
+    set compe_id = #{record.compeId,jdbcType=INTEGER},
+      compe_title = #{record.compeTitle,jdbcType=VARCHAR},
+      compe_type = #{record.compeType,jdbcType=INTEGER},
+      compe_status = #{record.compeStatus,jdbcType=INTEGER},
+      compe_host_score = #{record.compeHostScore,jdbcType=TINYINT},
+      compe_guest_score = #{record.compeGuestScore,jdbcType=TINYINT},
+      compe_time = #{record.compeTime,jdbcType=INTEGER},
+      compe_video_url = #{record.compeVideoUrl,jdbcType=VARCHAR},
+      compe_ht_id = #{record.compeHtId,jdbcType=INTEGER},
+      compe_gt_id = #{record.compeGtId,jdbcType=INTEGER},
+      compe_institution = #{record.compeInstitution,jdbcType=TINYINT},
+      compe_wt_id = #{record.compeWtId,jdbcType=INTEGER},
+      compe_season = #{record.compeSeason,jdbcType=INTEGER},
+      is_enable = #{record.isEnable,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sports.model.Competition">
+    update competition
+    <set>
+      <if test="compeTitle != null">
+        compe_title = #{compeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="compeType != null">
+        compe_type = #{compeType,jdbcType=INTEGER},
+      </if>
+      <if test="compeStatus != null">
+        compe_status = #{compeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="compeHostScore != null">
+        compe_host_score = #{compeHostScore,jdbcType=TINYINT},
+      </if>
+      <if test="compeGuestScore != null">
+        compe_guest_score = #{compeGuestScore,jdbcType=TINYINT},
+      </if>
+      <if test="compeTime != null">
+        compe_time = #{compeTime,jdbcType=INTEGER},
+      </if>
+      <if test="compeVideoUrl != null">
+        compe_video_url = #{compeVideoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="compeHtId != null">
+        compe_ht_id = #{compeHtId,jdbcType=INTEGER},
+      </if>
+      <if test="compeGtId != null">
+        compe_gt_id = #{compeGtId,jdbcType=INTEGER},
+      </if>
+      <if test="compeInstitution != null">
+        compe_institution = #{compeInstitution,jdbcType=TINYINT},
+      </if>
+      <if test="compeWtId != null">
+        compe_wt_id = #{compeWtId,jdbcType=INTEGER},
+      </if>
+      <if test="compeSeason != null">
+        compe_season = #{compeSeason,jdbcType=INTEGER},
+      </if>
+      <if test="isEnable != null">
+        is_enable = #{isEnable,jdbcType=TINYINT},
+      </if>
+    </set>
+    where compe_id = #{compeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sports.model.Competition">
+    update competition
+    set compe_title = #{compeTitle,jdbcType=VARCHAR},
+      compe_type = #{compeType,jdbcType=INTEGER},
+      compe_status = #{compeStatus,jdbcType=INTEGER},
+      compe_host_score = #{compeHostScore,jdbcType=TINYINT},
+      compe_guest_score = #{compeGuestScore,jdbcType=TINYINT},
+      compe_time = #{compeTime,jdbcType=INTEGER},
+      compe_video_url = #{compeVideoUrl,jdbcType=VARCHAR},
+      compe_ht_id = #{compeHtId,jdbcType=INTEGER},
+      compe_gt_id = #{compeGtId,jdbcType=INTEGER},
+      compe_institution = #{compeInstitution,jdbcType=TINYINT},
+      compe_wt_id = #{compeWtId,jdbcType=INTEGER},
+      compe_season = #{compeSeason,jdbcType=INTEGER},
+      is_enable = #{isEnable,jdbcType=TINYINT}
+    where compe_id = #{compeId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sports.dao.ResultMapper">
+  <resultMap id="BaseResultMap" type="com.sports.model.Result">
+    <id column="res_id" jdbcType="INTEGER" property="resId" />
+    <result column="compe_id" jdbcType="INTEGER" property="compeId" />
+    <result column="res_ht_score" jdbcType="INTEGER" property="resHtScore" />
+    <result column="res_gt_score" jdbcType="INTEGER" property="resGtScore" />
+    <result column="res_ht_Ldragon" jdbcType="TINYINT" property="resHtLdragon" />
+    <result column="res_gt_Ldragon" jdbcType="TINYINT" property="resGtLdragon" />
+    <result column="res_ht_Sdragon" jdbcType="TINYINT" property="resHtSdragon" />
+    <result column="res_gt_Sdragon" jdbcType="TINYINT" property="resGtSdragon" />
+    <result column="res_ht_gold" jdbcType="INTEGER" property="resHtGold" />
+    <result column="res_gt_gold" jdbcType="INTEGER" property="resGtGold" />
+    <result column="res_ht_guard" jdbcType="TINYINT" property="resHtGuard" />
+    <result column="res_gt_guard" jdbcType="TINYINT" property="resGtGuard" />
+    <result column="res_tag" jdbcType="TINYINT" property="resTag" />
+    <result column="is_enable" jdbcType="TINYINT" property="isEnable" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    res_id, compe_id, res_ht_score, res_gt_score, res_ht_Ldragon, res_gt_Ldragon, res_ht_Sdragon, 
+    res_gt_Sdragon, res_ht_gold, res_gt_gold, res_ht_guard, res_gt_guard, res_tag, is_enable
+  </sql>
+  <select id="selectByExample" parameterType="com.sports.model.ResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from result
+    where res_id = #{resId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from result
+    where res_id = #{resId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sports.model.ResultExample">
+    delete from result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sports.model.Result">
+    insert into result (res_id, compe_id, res_ht_score, 
+      res_gt_score, res_ht_Ldragon, res_gt_Ldragon, 
+      res_ht_Sdragon, res_gt_Sdragon, res_ht_gold, 
+      res_gt_gold, res_ht_guard, res_gt_guard, 
+      res_tag, is_enable)
+    values (#{resId,jdbcType=INTEGER}, #{compeId,jdbcType=INTEGER}, #{resHtScore,jdbcType=INTEGER}, 
+      #{resGtScore,jdbcType=INTEGER}, #{resHtLdragon,jdbcType=TINYINT}, #{resGtLdragon,jdbcType=TINYINT}, 
+      #{resHtSdragon,jdbcType=TINYINT}, #{resGtSdragon,jdbcType=TINYINT}, #{resHtGold,jdbcType=INTEGER}, 
+      #{resGtGold,jdbcType=INTEGER}, #{resHtGuard,jdbcType=TINYINT}, #{resGtGuard,jdbcType=TINYINT}, 
+      #{resTag,jdbcType=TINYINT}, #{isEnable,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sports.model.Result">
+    insert into result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="resId != null">
+        res_id,
+      </if>
+      <if test="compeId != null">
+        compe_id,
+      </if>
+      <if test="resHtScore != null">
+        res_ht_score,
+      </if>
+      <if test="resGtScore != null">
+        res_gt_score,
+      </if>
+      <if test="resHtLdragon != null">
+        res_ht_Ldragon,
+      </if>
+      <if test="resGtLdragon != null">
+        res_gt_Ldragon,
+      </if>
+      <if test="resHtSdragon != null">
+        res_ht_Sdragon,
+      </if>
+      <if test="resGtSdragon != null">
+        res_gt_Sdragon,
+      </if>
+      <if test="resHtGold != null">
+        res_ht_gold,
+      </if>
+      <if test="resGtGold != null">
+        res_gt_gold,
+      </if>
+      <if test="resHtGuard != null">
+        res_ht_guard,
+      </if>
+      <if test="resGtGuard != null">
+        res_gt_guard,
+      </if>
+      <if test="resTag != null">
+        res_tag,
+      </if>
+      <if test="isEnable != null">
+        is_enable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="resId != null">
+        #{resId,jdbcType=INTEGER},
+      </if>
+      <if test="compeId != null">
+        #{compeId,jdbcType=INTEGER},
+      </if>
+      <if test="resHtScore != null">
+        #{resHtScore,jdbcType=INTEGER},
+      </if>
+      <if test="resGtScore != null">
+        #{resGtScore,jdbcType=INTEGER},
+      </if>
+      <if test="resHtLdragon != null">
+        #{resHtLdragon,jdbcType=TINYINT},
+      </if>
+      <if test="resGtLdragon != null">
+        #{resGtLdragon,jdbcType=TINYINT},
+      </if>
+      <if test="resHtSdragon != null">
+        #{resHtSdragon,jdbcType=TINYINT},
+      </if>
+      <if test="resGtSdragon != null">
+        #{resGtSdragon,jdbcType=TINYINT},
+      </if>
+      <if test="resHtGold != null">
+        #{resHtGold,jdbcType=INTEGER},
+      </if>
+      <if test="resGtGold != null">
+        #{resGtGold,jdbcType=INTEGER},
+      </if>
+      <if test="resHtGuard != null">
+        #{resHtGuard,jdbcType=TINYINT},
+      </if>
+      <if test="resGtGuard != null">
+        #{resGtGuard,jdbcType=TINYINT},
+      </if>
+      <if test="resTag != null">
+        #{resTag,jdbcType=TINYINT},
+      </if>
+      <if test="isEnable != null">
+        #{isEnable,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sports.model.ResultExample" resultType="java.lang.Long">
+    select count(*) from result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update result
+    <set>
+      <if test="record.resId != null">
+        res_id = #{record.resId,jdbcType=INTEGER},
+      </if>
+      <if test="record.compeId != null">
+        compe_id = #{record.compeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.resHtScore != null">
+        res_ht_score = #{record.resHtScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.resGtScore != null">
+        res_gt_score = #{record.resGtScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.resHtLdragon != null">
+        res_ht_Ldragon = #{record.resHtLdragon,jdbcType=TINYINT},
+      </if>
+      <if test="record.resGtLdragon != null">
+        res_gt_Ldragon = #{record.resGtLdragon,jdbcType=TINYINT},
+      </if>
+      <if test="record.resHtSdragon != null">
+        res_ht_Sdragon = #{record.resHtSdragon,jdbcType=TINYINT},
+      </if>
+      <if test="record.resGtSdragon != null">
+        res_gt_Sdragon = #{record.resGtSdragon,jdbcType=TINYINT},
+      </if>
+      <if test="record.resHtGold != null">
+        res_ht_gold = #{record.resHtGold,jdbcType=INTEGER},
+      </if>
+      <if test="record.resGtGold != null">
+        res_gt_gold = #{record.resGtGold,jdbcType=INTEGER},
+      </if>
+      <if test="record.resHtGuard != null">
+        res_ht_guard = #{record.resHtGuard,jdbcType=TINYINT},
+      </if>
+      <if test="record.resGtGuard != null">
+        res_gt_guard = #{record.resGtGuard,jdbcType=TINYINT},
+      </if>
+      <if test="record.resTag != null">
+        res_tag = #{record.resTag,jdbcType=TINYINT},
+      </if>
+      <if test="record.isEnable != null">
+        is_enable = #{record.isEnable,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update result
+    set res_id = #{record.resId,jdbcType=INTEGER},
+      compe_id = #{record.compeId,jdbcType=INTEGER},
+      res_ht_score = #{record.resHtScore,jdbcType=INTEGER},
+      res_gt_score = #{record.resGtScore,jdbcType=INTEGER},
+      res_ht_Ldragon = #{record.resHtLdragon,jdbcType=TINYINT},
+      res_gt_Ldragon = #{record.resGtLdragon,jdbcType=TINYINT},
+      res_ht_Sdragon = #{record.resHtSdragon,jdbcType=TINYINT},
+      res_gt_Sdragon = #{record.resGtSdragon,jdbcType=TINYINT},
+      res_ht_gold = #{record.resHtGold,jdbcType=INTEGER},
+      res_gt_gold = #{record.resGtGold,jdbcType=INTEGER},
+      res_ht_guard = #{record.resHtGuard,jdbcType=TINYINT},
+      res_gt_guard = #{record.resGtGuard,jdbcType=TINYINT},
+      res_tag = #{record.resTag,jdbcType=TINYINT},
+      is_enable = #{record.isEnable,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sports.model.Result">
+    update result
+    <set>
+      <if test="compeId != null">
+        compe_id = #{compeId,jdbcType=INTEGER},
+      </if>
+      <if test="resHtScore != null">
+        res_ht_score = #{resHtScore,jdbcType=INTEGER},
+      </if>
+      <if test="resGtScore != null">
+        res_gt_score = #{resGtScore,jdbcType=INTEGER},
+      </if>
+      <if test="resHtLdragon != null">
+        res_ht_Ldragon = #{resHtLdragon,jdbcType=TINYINT},
+      </if>
+      <if test="resGtLdragon != null">
+        res_gt_Ldragon = #{resGtLdragon,jdbcType=TINYINT},
+      </if>
+      <if test="resHtSdragon != null">
+        res_ht_Sdragon = #{resHtSdragon,jdbcType=TINYINT},
+      </if>
+      <if test="resGtSdragon != null">
+        res_gt_Sdragon = #{resGtSdragon,jdbcType=TINYINT},
+      </if>
+      <if test="resHtGold != null">
+        res_ht_gold = #{resHtGold,jdbcType=INTEGER},
+      </if>
+      <if test="resGtGold != null">
+        res_gt_gold = #{resGtGold,jdbcType=INTEGER},
+      </if>
+      <if test="resHtGuard != null">
+        res_ht_guard = #{resHtGuard,jdbcType=TINYINT},
+      </if>
+      <if test="resGtGuard != null">
+        res_gt_guard = #{resGtGuard,jdbcType=TINYINT},
+      </if>
+      <if test="resTag != null">
+        res_tag = #{resTag,jdbcType=TINYINT},
+      </if>
+      <if test="isEnable != null">
+        is_enable = #{isEnable,jdbcType=TINYINT},
+      </if>
+    </set>
+    where res_id = #{resId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sports.model.Result">
+    update result
+    set compe_id = #{compeId,jdbcType=INTEGER},
+      res_ht_score = #{resHtScore,jdbcType=INTEGER},
+      res_gt_score = #{resGtScore,jdbcType=INTEGER},
+      res_ht_Ldragon = #{resHtLdragon,jdbcType=TINYINT},
+      res_gt_Ldragon = #{resGtLdragon,jdbcType=TINYINT},
+      res_ht_Sdragon = #{resHtSdragon,jdbcType=TINYINT},
+      res_gt_Sdragon = #{resGtSdragon,jdbcType=TINYINT},
+      res_ht_gold = #{resHtGold,jdbcType=INTEGER},
+      res_gt_gold = #{resGtGold,jdbcType=INTEGER},
+      res_ht_guard = #{resHtGuard,jdbcType=TINYINT},
+      res_gt_guard = #{resGtGuard,jdbcType=TINYINT},
+      res_tag = #{resTag,jdbcType=TINYINT},
+      is_enable = #{isEnable,jdbcType=TINYINT}
+    where res_id = #{resId,jdbcType=INTEGER}
+  </update>
+</mapper>
